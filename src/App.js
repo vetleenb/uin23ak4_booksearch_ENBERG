@@ -3,6 +3,11 @@ import React, { useState, useEffect } from 'react';
 import MySearchBar from './components/MySearchBar';
 import MySearchResults from './components/MySearchResults';
 import BookCard from './components/BookCard';
+const [favorites, setFavorites] = useState(() => {
+  // Hent favoritter fra localStorage hvis de finnes
+  const saved = localStorage.getItem('favorites');
+  return saved ? JSON.parse(saved) : [];
+});
 
 const App = () => {
   const [books, setBooks] = useState([]);
