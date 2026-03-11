@@ -98,4 +98,19 @@ const App = () => {
   );
 };
 
+{favorites.length > 0 && (
+  <section className="favorites">
+    <h2>Mine favoritter</h2>
+    <div className="book-list">
+      {favorites.map((book) => (
+        <BookCard
+          key={book.key}
+          book={book}
+          favorites={favorites}
+          toggleFavorite={toggleFavorite}
+        />
+      ))}
+    </div>
+  </section>
+
 export default App;
