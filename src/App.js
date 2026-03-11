@@ -1,4 +1,3 @@
-
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import MySearchBar from './components/MySearchBar';
@@ -7,17 +6,26 @@ import BookCard from './components/BookCard';
 
 const App = () => {
   const [books, setBooks] = useState([]);
-  const [mysearchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchBooks = async () => {
+      setLoading(true);
+
       try {
-        const responder = await fetch('https://openlibrary.org/subjects/james_bond.json?published_in=20XX');
-        const info = await responder.json();
-        setBooks(info.works);
+        const response = await fetch(
+          'https://openlibrary.org/subjects/james_bond.json'
+        );
+
+        const data = await response.json();
+        setBooks(data.works);
+
       } catch (error) {
         console.error('Error fetching books:', error);
       }
+
+      setLoading(false);
     };
 
     fetchBooks();
@@ -25,41 +33,44 @@ const App = () => {
 
   const handleSearch = async (searchTerm) => {
     try {
-      const responder = await fetch(`https://openlibrary.org/search.json?q=${searchTerm}`);
-      const info = await responder.json();
-      setSearchResults(info.docs);
+      const response = await fetch(
+        `https://openlibrary.org/search.json?q=${searchTerm}`
+      );
+
+      const data = await response.json();
+      setSearchResults(data.docs);
+
     } catch (error) {
       console.error('Error searching books:', error);
     }
   };
 
-
-
- return (
+  return (
     <div className="App">
       <header>
         <h1>James Bond Bøker</h1>
         <MySearchBar onSearch={handleSearch} />
       </header>
+
       <main>
-        {mysearchResults.length > 0 ? (
-          <MySearchResults results={mysearchResults} />
+        {loading && <p>Loading books...</p>}
+
+        {searchResults.length > 0 ? (
+          <MySearchResults results={searchResults} />
         ) : (
           <div className="book-list">
-            {books.map((book, index) => (
-              <BookCard key={index} book={book} />
+            {books.map((book) => (
+              <BookCard key={book.key} book={book} />
             ))}
           </div>
         )}
       </main>
+
       <footer>
-        <p>&copy; 2024 Vetle Enberg Oblig_4</p>
+        <p>&copy; 2024 Vetle Enberg</p>
       </footer>
     </div>
   );
 };
 
 export default App;
-
-
-   
