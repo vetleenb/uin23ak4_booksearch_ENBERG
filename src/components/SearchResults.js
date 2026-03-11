@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MySearchResults = ({ results }) => {
+const SearchResults = ({ results }) => {
   return (
     <div className="search-results">
       {results.map((result, index) => (
@@ -16,4 +16,4 @@ const MySearchResults = ({ results }) => {
   );
 };
 
-export default MySearchResults;
+export default SearchResults;
