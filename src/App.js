@@ -9,6 +9,21 @@ const [favorites, setFavorites] = useState(() => {
   return saved ? JSON.parse(saved) : [];
 });
 
+const toggleFavorite = (book) => {
+  let updatedFavorites;
+  const exists = favorites.find(fav => fav.key === book.key);
+
+  if (exists) {
+    // Fjern fra favoritter
+    updatedFavorites = favorites.filter(fav => fav.key !== book.key);
+  } else {
+    // Legg til i favoritter
+    updatedFavorites = [...favorites, book];
+  }
+
+  setFavorites(updatedFavorites);
+  localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+
 const App = () => {
   const [books, setBooks] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
@@ -64,10 +79,15 @@ const App = () => {
           <MySearchResults results={searchResults} />
         ) : (
           <div className="book-list">
-            {books.map((book) => (
-              <BookCard key={book.key} book={book} />
-            ))}
-          </div>
+  {books.map((book) => (
+    <BookCard
+      key={book.key}               // unik key fra API
+      book={book}                  // selve boka
+      favorites={favorites}        // hele favoritt-lista
+      toggleFavorite={toggleFavorite} // funksjonen
+    />
+  ))}
+</div>
         )}
       </main>
 
