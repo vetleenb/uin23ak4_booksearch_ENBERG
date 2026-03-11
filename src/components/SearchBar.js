@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SearchBar = ({ onSearch }) => {
+const MySearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleInputChange = (event) => {
@@ -9,10 +9,12 @@ const SearchBar = ({ onSearch }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSearch(searchTerm);
+    const trimmed = searchTerm.trim();
+    if (trimmed) {
+      onSearch(trimmed);
+    }
   };
 
-  
   return (
     <form onSubmit={handleSubmit}>
       <input
@@ -22,8 +24,9 @@ const SearchBar = ({ onSearch }) => {
         onChange={handleInputChange}
       />
       <button type="submit">Søk</button>
+      <button type="button" onClick={() => setSearchTerm('')}>Clear</button>
     </form>
   );
 };
 
-export default SearchBar;
+export default MySearchBar;
