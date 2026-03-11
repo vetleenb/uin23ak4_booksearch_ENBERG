@@ -13,7 +13,7 @@ const App = () => {
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Hent default bøker (James Bond)
+  // Hent default bøker
   useEffect(() => {
     const fetchBooks = async () => {
       setLoading(true);
@@ -28,7 +28,6 @@ const App = () => {
       }
       setLoading(false);
     };
-
     fetchBooks();
   }, []);
 
@@ -67,7 +66,7 @@ const App = () => {
         <MySearchBar onSearch={handleSearch} />
       </header>
 
-      {/* Favoritter-seksjon */}
+      {/* Favoritter */}
       {favorites.length > 0 && (
         <section className="favorites">
           <h2>Mine favoritter</h2>
