@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import MySearchBar from './components/MySearchBar';
-import MySearchResults from './components/MySearchResults';
+import SearchBar from './components/SearchBar';
+import SearchResults from './components/SearchResults';
 import BookCard from './components/BookCard';
 
 const App = () => {
@@ -87,7 +87,7 @@ const App = () => {
         {loading && <p>Loading books...</p>}
 
         {searchResults.length > 0 ? (
-          <MySearchResults
+          <SearchResults
             results={searchResults}
             favorites={favorites}
             toggleFavorite={toggleFavorite}
